@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 57398c300e063984fb7b2f3da2cc7f88
+  productGUID: 801d6b0fd8c0d95479faf3352b3556e1
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -915,11 +915,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: e4a0bfee-209a-4bf9-b348-23db9000e6d9
+  cloudProjectId: 5f47fa36-70db-4c38-9c1a-507611caa73c
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: Horror
-  organizationId: alexro7676
+  organizationId: alexe1289
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
