@@ -44,3 +44,6 @@ Thumbs.db
 *.log
 /Horror/Logs
 /Horror/UserSettings
+Horror/Packages/manifest.json
+Horror/Packages/packages-lock.json
+Horror/ProjectSettings/ProjectVersion.txt
