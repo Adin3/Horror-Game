@@ -36,10 +36,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(grounded)
         {
-            rb.drag = groundDrag;
+            rb.linearDamping = groundDrag;
         } else
         {
-            rb.drag = 0;
+            rb.linearDamping = 0;
         }
     }
 
