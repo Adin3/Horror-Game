@@ -41,11 +41,15 @@ public class PauseMenu : MonoBehaviour
     void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
-    public void GoToScene(string sceneName)
+    public void GoToMainMenu(string sceneName)
     {
+        isPaused = false;
         SceneManager.LoadScene(sceneName);
     }
 }
