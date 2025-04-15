@@ -30,7 +30,8 @@ public class PlayerCam : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
 
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        //pus limita la 89.99 ca sa nu se mai blocheze cand se uita fix in jos/sus
+        xRotation = Mathf.Clamp(xRotation, -89.999f, 89.999f);
 
         //rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);

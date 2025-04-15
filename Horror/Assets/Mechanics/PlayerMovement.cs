@@ -6,11 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
-
     public float groundDrag;
 
-    [Header("Ground Check")]
-    public float playerHeigt;
+    [Header("Gravity")]
+    [SerializeField] public float gravity = 100f;
+    [SerializeField] public float playerHeight = 2;
+
+
     public LayerMask whatIsGround;
     bool grounded;
 
@@ -30,14 +32,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeigt * 1.5f + 0.2f, whatIsGround);
+        // Ground check using raycast
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 1.5f + 0.2f, whatIsGround);
 
         MyInput();
 
-        if(grounded)
+        // Apply ground drag when grounded
+        if (grounded)
         {
             rb.linearDamping = groundDrag;
-        } else
+        }
+        else
         {
             rb.linearDamping = 0;
         }
@@ -46,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+        ApplyGravity();
     }
 
     private void MyInput()
@@ -56,9 +62,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        // Calculate movement direction based on the camera's yaw (horizontal rotation only)
+        Vector3 forward = orientation.forward;
+        Vector3 right = orientation.right;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        // Ignore vertical movement (pitch) by flattening the direction vectors to the XZ plane
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+
+        // Combine the movement directions
+        moveDirection = forward * verticalInput + right * horizontalInput;
+
+        // Apply movement force (keep y velocity unaffected by horizontal movement)
+        Vector3 targetVelocity = moveDirection.normalized * moveSpeed;
+        targetVelocity.y = rb.linearVelocity.y; // Preserve the y-velocity for gravity
+        rb.linearVelocity = targetVelocity;
+    }
+
+    private void ApplyGravity()
+    {
+        // Apply custom gravity if not grounded
+        if (!grounded)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Force); // Adjust gravity force if needed
+        }
     }
 }
