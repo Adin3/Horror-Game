@@ -9,6 +9,7 @@ public class InteractableObject : MonoBehaviour
     {
         interactUiMessage.SetActive(false);
         outline = GetComponent<Outline>();
+        outline.enabled = true;
         outline.enabled = false;
     }
 
