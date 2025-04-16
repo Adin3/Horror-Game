@@ -36,10 +36,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(grounded)
         {
-            rb.drag = groundDrag;
+            rb.linearDamping = groundDrag;
         } else
         {
-            rb.drag = 0;
+            rb.linearDamping = 0;
         }
     }
 
@@ -59,6 +59,6 @@ public class PlayerMovement : MonoBehaviour
         //calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f * Time.deltaTime, ForceMode.Force);
     }
 }
