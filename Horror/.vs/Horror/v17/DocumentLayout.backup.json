@@ -1,0 +1,102 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\ProiecteMari\\Horror-Game\\Horror\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|D:\\ProiecteMari\\Horror-Game\\Horror\\assets\\mechanics\\payerinteraction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|solutionrelative:assets\\mechanics\\payerinteraction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|d:\\proiectemari\\horror-game\\horror\\assets\\mechanics\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|solutionrelative:assets\\mechanics\\interactable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|D:\\ProiecteMari\\Horror-Game\\Horror\\assets\\mechanics\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|solutionrelative:assets\\mechanics\\playermovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|D:\\ProiecteMari\\Horror-Game\\Horror\\assets\\mechanics\\movecamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|solutionrelative:assets\\mechanics\\movecamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|D:\\ProiecteMari\\Horror-Game\\Horror\\assets\\mechanics\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBE5FED8-C6F9-D186-BCCD-208B34705BCD}|Assembly-CSharp.csproj|solutionrelative:assets\\mechanics\\playercam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Interactable.cs",
+              "DocumentMoniker": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\Interactable.cs",
+              "RelativeDocumentMoniker": "Assets\\Mechanics\\Interactable.cs",
+              "ToolTip": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\Interactable.cs",
+              "RelativeToolTip": "Assets\\Mechanics\\Interactable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T10:43:18.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PayerInteraction.cs",
+              "DocumentMoniker": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PayerInteraction.cs",
+              "RelativeDocumentMoniker": "Assets\\Mechanics\\PayerInteraction.cs",
+              "ToolTip": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PayerInteraction.cs",
+              "RelativeToolTip": "Assets\\Mechanics\\PayerInteraction.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T10:34:27.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PlayerMovement.cs",
+              "DocumentMoniker": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PlayerMovement.cs",
+              "RelativeDocumentMoniker": "Assets\\Mechanics\\PlayerMovement.cs",
+              "ToolTip": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PlayerMovement.cs",
+              "RelativeToolTip": "Assets\\Mechanics\\PlayerMovement.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwC0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T13:20:03.916Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MoveCamera.cs",
+              "DocumentMoniker": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\MoveCamera.cs",
+              "RelativeDocumentMoniker": "Assets\\Mechanics\\MoveCamera.cs",
+              "ToolTip": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\MoveCamera.cs",
+              "RelativeToolTip": "Assets\\Mechanics\\MoveCamera.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T12:53:15.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PlayerCam.cs",
+              "DocumentMoniker": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PlayerCam.cs",
+              "RelativeDocumentMoniker": "Assets\\Mechanics\\PlayerCam.cs",
+              "ToolTip": "D:\\ProiecteMari\\Horror-Game\\Horror\\Assets\\Mechanics\\PlayerCam.cs",
+              "RelativeToolTip": "Assets\\Mechanics\\PlayerCam.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAqAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADvSURBVDhPYxgFCHDx8cX/cavj/mtO0Pyv2qf6P3Jl5H\u002BoFMPbj2//q09QB/OR2SDACCIuP7n8P2JtBIOZtBlDokEiAz87P8ONNzcYwg3DGUEaTOaYgBUjAzZmNoabBTfB\u002BhlS16f\u002B91rg9f/Lly9wk5EBPhcwgYhTT08xeKh4MPDw8EBMJAGADWBlYgVjbADmhV9/fzEo9irC2ciuYIheGf0/bHkYVueDAD4vgJ188v7J/1Froxg8VD0YwrTCGFiZWRkuv7rMkG6RTtBLcAV7bu75P/X0VIa77\u002B8ycLJyMjjIOTB0enWSHCYjDzAwAADfwHLttPx8VwAAAABJRU5ErkJggg==",
+              "WhenOpened": "2025-03-25T08:52:06.746Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
