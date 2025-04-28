@@ -7692,7 +7692,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254805310}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9142,7 +9142,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414310328}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -11914,7 +11914,7 @@ Transform:
   m_GameObject: {fileID: 494527306}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.024, y: 0.622, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12362,7 +12362,7 @@ GameObject:
   - component: {fileID: 566191820}
   - component: {fileID: 566191819}
   - component: {fileID: 566191818}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13142,7 +13142,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689550224}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -13808,11 +13808,11 @@ Transform:
   m_GameObject: {fileID: 720240356}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.012868881, y: 0.142, z: -0.080694675}
-  m_LocalScale: {x: 1, y: 0.6666667, z: 1}
+  m_LocalPosition: {x: 0, y: 0.143, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1357328420}
+  m_Father: {fileID: 831638332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &720240358
 MonoBehaviour:
@@ -14564,7 +14564,7 @@ GameObject:
   - component: {fileID: 763345372}
   - component: {fileID: 763345371}
   - component: {fileID: 763345370}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stairs (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20539,7 +20539,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773546110}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -20560,7 +20560,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773546110}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -20730,7 +20730,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811506010}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -21224,10 +21224,11 @@ Transform:
   m_GameObject: {fileID: 831638331}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.262869, y: 3.067, z: -5.708}
+  m_LocalPosition: {x: -28.924, y: 1.371, z: -5.843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 720240357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &831638333
@@ -28525,7 +28526,7 @@ GameObject:
   - component: {fileID: 1040833220}
   - component: {fileID: 1040833219}
   - component: {fileID: 1040833218}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: coliziune_scari
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30530,7 +30531,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1199505190}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -34929,7 +34930,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!4 &1357328420
 Transform:
@@ -34940,14 +34941,13 @@ Transform:
   m_GameObject: {fileID: 1357328416}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.88, y: 0.98099995, z: -5.6273055}
-  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_LocalPosition: {x: -28.88, y: 1.637, z: -5.817}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 571358158}
   - {fileID: 494527307}
   - {fileID: 1438195236}
-  - {fileID: 720240357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1357328421
@@ -34962,14 +34962,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cd93b45f5ad9148aef49315d2db694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  walkSpeed: 5
+  sprintSpeed: 8
   groundDrag: 5
-  gravity: 50
-  playerHeight: 0
+  airMultiplier: 1
+  crouchSpeed: 3
+  crouchYScale: 0.5
+  jumpKey: 32
+  sprintKey: 304
+  crouchKey: 306
+  playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   orientation: {fileID: 494527307}
+  state: 0
 --- !u!1001 &1359479995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35613,8 +35620,8 @@ Transform:
   m_GameObject: {fileID: 1438195235}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.844, z: 0}
-  m_LocalScale: {x: 0.95626885, y: 0.95626885, z: 0.6404614}
+  m_LocalPosition: {x: 0, y: 0.719, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1357328420}
@@ -37334,7 +37341,7 @@ GameObject:
   - component: {fileID: 1603443651}
   - component: {fileID: 1603443650}
   - component: {fileID: 1603443649}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37952,7 +37959,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653620734}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ec94a8638ed24ad419ac54b4cdb85fcb, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
