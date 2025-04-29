@@ -22,18 +22,18 @@ public class InteractableObject : MonoBehaviour
         {
             if (hit.collider.gameObject == gameObject)
             {
-                interactUiMessage.SetActive(true);
+                //interactUiMessage.SetActive(true);
                 outline.enabled = true;
             }
             else
             {
-                interactUiMessage.SetActive(false);
+                //interactUiMessage.SetActive(false);
                 outline.enabled = false;
             }
         }
         else
         {
-            interactUiMessage.SetActive(false);
+            //interactUiMessage.SetActive(false);
             outline.enabled = false;
         }
     }
