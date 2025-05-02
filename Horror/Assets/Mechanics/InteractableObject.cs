@@ -4,6 +4,7 @@ public class InteractableObject : MonoBehaviour
 {
     public GameObject interactUiMessage;
     private Outline outline;
+    public LayerMask interactableLayer;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class InteractableObject : MonoBehaviour
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 3f))
+        if (Physics.Raycast(ray, out hit, 3f, interactableLayer))
         {
             if (hit.collider.gameObject == gameObject)
             {
