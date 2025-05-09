@@ -21242,7 +21242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e14f2e382c63f84d8c57c980b19cd48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPosition: {fileID: 1438195236}
+  cameraPosition: {fileID: 1357328420}
 --- !u!1001 &845219001
 PrefabInstance:
   m_ObjectHideFlags: 0
