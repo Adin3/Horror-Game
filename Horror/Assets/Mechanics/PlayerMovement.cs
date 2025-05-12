@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Data;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
+    private float moveSpeed;
+    public float walkSpeed;
+    public float sprintSpeed;
+
     public float groundDrag;
 
-    [Header("Gravity")]
-    [SerializeField] public float gravity = 100f;
-    [SerializeField] public float playerHeight = 2;
+    [Header("Jumping")]
+    public float airMultiplier;
 
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchYScale;
+    private float startYScale;
 
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode crouchKey = KeyCode.LeftControl;
+
+    [Header("Ground Check")]
+    public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
 
@@ -22,73 +37,125 @@ public class PlayerMovement : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
+
     Rigidbody rb;
 
-    private void Start()
+    public MovementState state;
+    public enum MovementState
+    {
+        walking,
+        sprinting,
+        crouching,
+        air
+    }
+
+    public void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        startYScale = transform.localScale.y;
     }
 
     private void Update()
     {
-        // Ground check using raycast
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 1.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
+        SpeedControl();
+        StateHandler();
 
-        // Apply ground drag when grounded
         if (grounded)
         {
             rb.linearDamping = groundDrag;
-        }
-        else
+        } else
         {
             rb.linearDamping = 0;
         }
+
+        
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
-        ApplyGravity();
     }
 
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        // start crouch
+        if (Input.GetKeyDown(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+
+        // stop crouch
+        if (Input.GetKeyUp(crouchKey))
+        {
+            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+        }
+    }
+
+    private void StateHandler()
+    {
+        // Mode - Crouching
+        if (Input.GetKey(crouchKey))
+        {
+            state = MovementState.crouching;
+            moveSpeed = crouchSpeed;
+        }
+
+        // Mode - Sprinting
+        else if (grounded && Input.GetKey(sprintKey))
+        {
+            state = MovementState.sprinting;
+            moveSpeed = sprintSpeed;
+        }
+
+        // Mode - Walking
+        else if (grounded)
+        {
+            state = MovementState.walking;
+            moveSpeed = walkSpeed;
+        }
+
+        // Mode - Air
+        else
+        {
+            state = MovementState.air;
+        }
     }
 
     private void MovePlayer()
     {
-        // Calculate movement direction based on the camera's yaw (horizontal rotation only)
-        Vector3 forward = orientation.forward;
-        Vector3 right = orientation.right;
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // Ignore vertical movement (pitch) by flattening the direction vectors to the XZ plane
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
-
-
-        // Combine the movement directions
-        moveDirection = forward * verticalInput + right * horizontalInput;
-
-        // Apply movement force (keep y velocity unaffected by horizontal movement)
-        Vector3 targetVelocity = moveDirection.normalized * moveSpeed;
-        targetVelocity.y = rb.linearVelocity.y; // Preserve the y-velocity for gravity
-        rb.linearVelocity = targetVelocity;
-    }
-
-    private void ApplyGravity()
-    {
-        // Apply custom gravity if not grounded
-        if (!grounded)
+        // on ground
+        if (grounded)
         {
-            rb.AddForce(Vector3.down * gravity, ForceMode.Force); // Adjust gravity force if needed
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        } 
+        else if (!grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
+
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        // limit velocity if needed
+        if (flatVel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
 }

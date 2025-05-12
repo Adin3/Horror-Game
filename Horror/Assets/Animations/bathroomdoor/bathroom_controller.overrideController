@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: bathroom_controller
+  m_Controller: {fileID: 9100000, guid: f195f4ab3e141fe499e9b469c6b99999, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -7790214577525528917, guid: 3fc7fccc9d87bd643b47ddc7d5e427e2, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: f603a52a715b2a54a889d94c5572621f, type: 2}
+  - m_OriginalClip: {fileID: -8428289498810594132, guid: 3fc7fccc9d87bd643b47ddc7d5e427e2, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: b27fe29e5e9a2da4dbec00bda3cac6bb, type: 2}
