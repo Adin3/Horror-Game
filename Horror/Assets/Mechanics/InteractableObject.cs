@@ -5,6 +5,7 @@ public class InteractableObject : MonoBehaviour
     public GameObject interactUiMessage;
     private Outline outline;
     public LayerMask interactableLayer;
+    public Camera playerCamera;
 
     void Start()
     {
@@ -16,7 +17,7 @@ public class InteractableObject : MonoBehaviour
 
     void Update()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 3f, interactableLayer))

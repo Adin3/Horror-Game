@@ -5,7 +5,7 @@ using TMPro;
 using System.Data;
 using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviourPun
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviourPun
 
     Rigidbody rb;
 
-    private PhotonView photonView;
+    PhotonView view;
 
     public MovementState state;
     public enum MovementState
@@ -54,49 +54,53 @@ public class PlayerMovement : MonoBehaviourPun
 
     public void Start()
     {
-        photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         startYScale = transform.localScale.y;
-        if (!photonView.IsMine)
+        view = GetComponent<PhotonView>();
+
+        // Only enable physics simulation for the local player
+        if (!view.IsMine)
         {
-            this.enabled = false;
-            return;
+            rb.isKinematic = true;
         }
     }
 
     private void Update()
     {
-        if (!photonView.IsMine)
+        // Only process input and movement for the local player
+        if (view.IsMine)
         {
-            //this.enabled = false;
-            return;
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+            MyInput();
+            SpeedControl();
+            StateHandler();
+
+            if (grounded)
+            {
+                rb.linearDamping = groundDrag;
+            }
+            else
+            {
+                rb.linearDamping = 0;
+            }
         }
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        MyInput();
-        SpeedControl();
-        StateHandler();
-
-        if (grounded)
-        {
-            rb.linearDamping = groundDrag;
-        } else
-        {
-            rb.linearDamping = 0;
-        }
-
-        
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        // Only move the local player
+        if (view.IsMine)
+        {
+            MovePlayer();
+        }
     }
 
     private void MyInput()
     {
+        // Only process input for the local player (redundant check since this is only called if view.IsMine)
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -152,13 +156,12 @@ public class PlayerMovement : MonoBehaviourPun
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        } 
+        }
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
-
 
     private void SpeedControl()
     {
@@ -171,5 +174,4 @@ public class PlayerMovement : MonoBehaviourPun
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
     }
-
 }

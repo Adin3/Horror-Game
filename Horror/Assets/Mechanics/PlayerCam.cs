@@ -1,37 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class PlayerCam : MonoBehaviourPun
+public class PlayerCam : MonoBehaviour
 {
  
     public float sensX;
     public float sensY;
     public Transform orientation;
-    private PhotonView photonView;
 
     float xRotation;
     float yRotation;
     void Start()
     {
-        photonView = GetComponent<PhotonView>();
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-            return;
-        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        if (!photonView.IsMine)
-        {
-            //this.enabled = false;
-            return;
-        }
         if (PauseMenu.isPaused)
         {
             return; 
