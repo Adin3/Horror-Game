@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Data;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
     [Header("Movement")]
     private float moveSpeed;
@@ -40,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    private PhotonView photonView;
+
     public MovementState state;
     public enum MovementState
     {
@@ -51,14 +54,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void Start()
     {
+        photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
         startYScale = transform.localScale.y;
+        if (!photonView.IsMine)
+        {
+            this.enabled = false;
+            return;
+        }
     }
 
     private void Update()
     {
+        if (!photonView.IsMine)
+        {
+            //this.enabled = false;
+            return;
+        }
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         MyInput();
