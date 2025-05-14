@@ -1,70 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerInteraction : MonoBehaviour
 {
     public float playerReach = 3f;
-    Interactable currentInteractable;
+    public Camera playerCam = null;
+    PhotonView view;
+
+    private void Start()
+    {
+        view = GetComponent<PhotonView>();
+
+    }
 
     private void Update()
     {
-        CheckInteraction();
-        if (Input.GetKeyDown(KeyCode.E) && currentInteractable != null)
+        if (view.IsMine)
         {
-            currentInteractable.Interact();
-        }
-
-    }
-
-    void CheckInteraction()
-    {
-        RaycastHit hit;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-
-        if (Physics.Raycast(ray, out hit, playerReach))
-        {
-            if (hit.collider.tag == "Interactable")
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Interactable newInteractable = hit.collider.GetComponent<Interactable>();
-
-                if (currentInteractable && newInteractable != currentInteractable)
+                Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hit, 3f))
                 {
-                    currentInteractable.DisableOutline();
-                }
-
-                if (newInteractable.enabled)
-                {
-                    SetNewCurrentInteractable(newInteractable);
-                }
-                else
-                {
-                    DisableCurrentInteractable();
+                    var interactable = hit.collider.GetComponent<InteractableObject>();
+                    if (interactable != null)
+                    {
+                        if (interactable is door_panel_script)
+                        {
+                            door_panel_script door = interactable as door_panel_script;
+                            if (door != null)
+                            {
+                                door.HandleInteraction(); // This must be public to call from here
+                            }
+                        }
+                    }
                 }
             }
-            else
-            {
-                DisableCurrentInteractable();
-            }
         }
-        else
-        {
-            DisableCurrentInteractable();
-        }
+
     }
 
-    void SetNewCurrentInteractable(Interactable newInteractable)
-    {
-        currentInteractable = newInteractable;
-        currentInteractable.EnableOutline();
-    }
+    //void CheckInteraction()
+    //{
+    //    RaycastHit hit;
+    //    Ray ray = new Ray(playerCam.transform.position, Camera.main.transform.forward);
 
-    void DisableCurrentInteractable()
-    {
-        if (currentInteractable)
-        {
-            currentInteractable.DisableOutline();
-            currentInteractable = null;
-        }
-    }
+    //    if (Physics.Raycast(ray, out hit, playerReach))
+    //    {
+    //        if (hit.collider.tag == "Interactable")
+    //        {
+    //            Interactable newInteractable = hit.collider.GetComponent<Interactable>();
+
+    //            if (currentInteractable && newInteractable != currentInteractable)
+    //            {
+    //                currentInteractable.DisableOutline();
+    //            }
+
+    //            if (newInteractable.enabled)
+    //            {
+    //                SetNewCurrentInteractable(newInteractable);
+    //            }
+    //            else
+    //            {
+    //                DisableCurrentInteractable();
+    //            }
+    //        }
+    //        else
+    //        {
+    //            DisableCurrentInteractable();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        DisableCurrentInteractable();
+    //    }
+    //}
+
+    //void SetNewCurrentInteractable(Interactable newInteractable)
+    //{
+    //    currentInteractable = newInteractable;
+    //    currentInteractable.EnableOutline();
+    //}
+
+    //void DisableCurrentInteractable()
+    //{
+    //    if (currentInteractable)
+    //    {
+    //        currentInteractable.DisableOutline();
+    //        currentInteractable = null;
+    //    }
+    //}
 }

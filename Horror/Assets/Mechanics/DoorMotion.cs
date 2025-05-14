@@ -1,38 +1,23 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class door_panel_script : MonoBehaviour
+public class door_panel_script : InteractableObject
 {
     private Animator mAnimator;
     private bool isOpen = false;
-    public Camera playerCamera;
 
-    public float interactDistance = 3f; // maximum interaction distance
     void Start()
     {
         mAnimator = GetComponent<Animator>();
     }
 
-    void Update()
+
+    public override void HandleInteraction()
     {
-        // Create a ray from the center of the screen
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        // Perform the raycast
-        if (Physics.Raycast(ray, out hit, interactDistance))
-        {
-            // Check if this door panel is the one being looked at
-            if (hit.collider.gameObject == gameObject)
-            {
-                // Listen for E key press
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    ToggleDoor();
-                }
-            }
-        }
+        Debug.Log("Opening door...");
+        ToggleDoor();
     }
-
+   
     void ToggleDoor()
     {
         if (mAnimator != null)
