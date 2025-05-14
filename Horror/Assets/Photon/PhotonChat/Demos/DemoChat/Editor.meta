@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Horror/Assets/Scenes/SampleScene.unity.meta
+guid: 6e92760616817c9428c59d5dedc86b42
+========
 guid: c33037d6755b1134db073d59feb6f7d9
 folderAsset: yes
+>>>>>>>> main:Horror/Assets/Photon/PhotonChat/Demos/DemoChat/Editor.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
