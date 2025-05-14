@@ -1,28 +1,24 @@
 using System.Collections;
-
 using UnityEngine;
 using Photon.Pun;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-
     public GameObject player;
     [Space]
     public Transform spawnPoint;
+
     private GameObject _player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         Debug.Log("Connecting");
-
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    // Update is called once per frame
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-
         Debug.Log("Connected");
 
         PhotonNetwork.JoinLobby();
@@ -33,7 +29,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
 
         PhotonNetwork.JoinOrCreateRoom("Lobby", null, null);
-
         Debug.Log("We joined a room");
 
         StartCoroutine(spawnPlayer());
@@ -42,7 +37,37 @@ public class RoomManager : MonoBehaviourPunCallbacks
     IEnumerator spawnPlayer()
     {
         yield return new WaitForSeconds(1);
+        Debug.Log("Spawned " + spawnPoint.position);
 
         _player = PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
+
+        Transform pla = _player.transform.Find("Player");
+        Transform cameraHolder = _player.transform.Find("CameraHolder");
+        Camera camera = cameraHolder.GetComponentInChildren<Camera>();
+        PhotonView view = pla.GetComponent<PhotonView>();
+        
+        if (view.IsMine)
+        {
+            // Enable player controls only for the local player
+            var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+            if (playerController != null)
+            {
+                playerController.enabled = true;
+            }
+
+            if (camera != null)
+            {
+                camera.enabled = true; // Enable camera for local player
+            }
+        }
+        else
+        {
+            // Disable controls for remote players
+            var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+            if (playerController != null)
+            {
+                playerController.enabled = false;
+            }
+        }
     }
 }

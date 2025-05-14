@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Data;
+using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    PhotonView view;
+
     public MovementState state;
     public enum MovementState
     {
@@ -55,34 +58,49 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         startYScale = transform.localScale.y;
+        view = GetComponent<PhotonView>();
+
+        // Only enable physics simulation for the local player
+        if (!view.IsMine)
+        {
+            rb.isKinematic = true;
+        }
     }
 
     private void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
-        MyInput();
-        SpeedControl();
-        StateHandler();
-
-        if (grounded)
+        // Only process input and movement for the local player
+        if (view.IsMine)
         {
-            rb.linearDamping = groundDrag;
-        } else
-        {
-            rb.linearDamping = 0;
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+            MyInput();
+            SpeedControl();
+            StateHandler();
+
+            if (grounded)
+            {
+                rb.linearDamping = groundDrag;
+            }
+            else
+            {
+                rb.linearDamping = 0;
+            }
         }
-
-        
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        // Only move the local player
+        if (view.IsMine)
+        {
+            MovePlayer();
+        }
     }
 
     private void MyInput()
     {
+        // Only process input for the local player (redundant check since this is only called if view.IsMine)
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -138,13 +156,12 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-        } 
+        }
         else if (!grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
-
 
     private void SpeedControl()
     {
@@ -157,5 +174,4 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
     }
-
 }

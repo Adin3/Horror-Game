@@ -4,6 +4,7 @@ public class door_panel_script : MonoBehaviour
 {
     private Animator mAnimator;
     private bool isOpen = false;
+    public Camera playerCamera;
 
     public float interactDistance = 3f; // maximum interaction distance
     void Start()
@@ -14,7 +15,7 @@ public class door_panel_script : MonoBehaviour
     void Update()
     {
         // Create a ray from the center of the screen
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
         // Perform the raycast
