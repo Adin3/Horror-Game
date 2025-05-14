@@ -55,6 +55,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 playerController.enabled = true;
             }
 
+            var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
+            if (playerInteraction != null)
+            {
+                playerInteraction.enabled = true;
+                playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+            }
             if (camera != null)
             {
                 camera.enabled = true; // Enable camera for local player
