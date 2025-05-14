@@ -24,18 +24,12 @@ public class PlayerInteraction : MonoBehaviour
                 Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit, 3f))
                 {
-                    var interactable = hit.collider.GetComponent<InteractableObject>();
+                    InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
                     if (interactable != null)
                     {
-                        if (interactable is door_panel_script)
-                        {
-                            door_panel_script door = interactable as door_panel_script;
-                            if (door != null)
-                            {
-                                door.HandleInteraction(); // This must be public to call from here
-                            }
-                        }
+                        interactable.HandleInteraction(); // This handles the correct override via polymorphism
                     }
+
                 }
             }
         }

@@ -14,16 +14,24 @@ public class door_panel_script : InteractableObject
 
     public override void HandleInteraction()
     {
-        Debug.Log("Opening door...");
         ToggleDoor();
     }
-   
+
     void ToggleDoor()
     {
-        if (mAnimator != null)
+        if (mAnimator != null && PhotonNetwork.IsConnected)
         {
-            isOpen = !isOpen;
-            mAnimator.SetBool("isOpen", isOpen);
+            photonView.RPC(nameof(RPC_ToggleDoor), RpcTarget.AllBuffered);
+        } else
+        {
+            RPC_ToggleDoor();
         }
+    }
+
+    [PunRPC]
+    private void RPC_ToggleDoor()
+    {
+        isOpen = !isOpen;
+        mAnimator.SetBool("isOpen", isOpen);
     }
 }
