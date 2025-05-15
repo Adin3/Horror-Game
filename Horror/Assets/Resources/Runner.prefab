@@ -267,7 +267,6 @@ GameObject:
   - component: {fileID: 8606697970503679362}
   - component: {fileID: 3296915552243431100}
   - component: {fileID: 7453694015608305718}
-  - component: {fileID: 7699649281030432267}
   - component: {fileID: 4809780038030449509}
   - component: {fileID: 2310458537540212457}
   - component: {fileID: 6750586939249750320}
@@ -404,23 +403,6 @@ MonoBehaviour:
     m_Bits: 1024
   orientation: {fileID: 2118399769282245379}
   state: 0
---- !u!114 &7699649281030432267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5969567845267812738}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3962cb1f180a1574db67da1ac72cd5f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grabDistance: 3
-  moveSpeed: 3
-  draggableLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &4809780038030449509
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -41,6 +41,9 @@ MonoBehaviour:
   - RespawnSpaceship
   - HandleInteraction
   - RPC_HandleInteraction
+  - RPC_ToggleDoor
+  - RPC_Remove
+  - RemoveVent
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
