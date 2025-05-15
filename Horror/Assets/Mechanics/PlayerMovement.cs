@@ -80,12 +80,10 @@ public class PlayerMovement : MonoBehaviour
 
             if (grounded)
             {
-                Debug.Log("Grounded");
                 rb.linearDamping = groundDrag;
             }
             else
             {
-                Debug.Log("Air");
                 rb.linearDamping = 0;
             }
         }
@@ -158,7 +156,6 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            Debug.Log("Grounded");
         }
         else if (!grounded)
         {
