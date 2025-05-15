@@ -4,9 +4,12 @@ using Photon.Pun;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
-    public GameObject player;
+    public GameObject runner;
+    public GameObject seeker;
     [Space]
     public Transform spawnPoint;
+
+    public bool isSeeker = true;
 
     private GameObject _player;
 
@@ -38,41 +41,88 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(1);
         Debug.Log("Spawned " + spawnPoint.position);
-
-        _player = PhotonNetwork.Instantiate(player.name, spawnPoint.position, Quaternion.identity);
-
-        Transform pla = _player.transform.Find("Player");
-        Transform cameraHolder = _player.transform.Find("CameraHolder");
-        Camera camera = cameraHolder.GetComponentInChildren<Camera>();
-        PhotonView view = pla.GetComponent<PhotonView>();
-        
-        if (view.IsMine)
+        if (isSeeker)
         {
-            // Enable player controls only for the local player
-            var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
-            if (playerController != null)
+            _player = PhotonNetwork.Instantiate(seeker.name, spawnPoint.position, Quaternion.identity);
+            if (_player == null)
             {
-                playerController.enabled = true;
+                Debug.LogError("Player object is null after instantiation.");
+                yield break; // Exit the coroutine if instantiation failed
             }
+            Transform pla = _player.transform.Find("Player");
+            Transform cameraHolder = pla.transform.Find("CameraHolder");
+            Camera camera = cameraHolder.GetComponentInChildren<Camera>();
+            PhotonView view = pla.GetComponent<PhotonView>();
 
-            var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
-            if (playerInteraction != null)
+            if (view.IsMine)
             {
-                playerInteraction.enabled = true;
-                playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+                // Enable player controls only for the local player
+                var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+                if (playerController != null)
+                {
+                    Debug.Log("Enabling player controller for local player.");
+                    playerController.enabled = true;
+                }
+
+                var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
+                if (playerInteraction != null)
+                {
+                    playerInteraction.enabled = true;
+                    playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+                }
+                if (camera != null)
+                {
+                    Debug.Log("Enabling camera for local player.");
+                    camera.enabled = true; // Enable camera for local player
+                }
             }
-            if (camera != null)
+            else
             {
-                camera.enabled = true; // Enable camera for local player
+                // Disable controls for remote players
+                var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+                if (playerController != null)
+                {
+                    playerController.enabled = false;
+                }
             }
         }
         else
         {
-            // Disable controls for remote players
-            var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
-            if (playerController != null)
+            _player = PhotonNetwork.Instantiate(runner.name, spawnPoint.position, Quaternion.identity);
+
+            Transform pla = _player.transform.Find("Player");
+            Transform cameraHolder = _player.transform.Find("CameraHolder");
+            Camera camera = cameraHolder.GetComponentInChildren<Camera>();
+            PhotonView view = pla.GetComponent<PhotonView>();
+
+            if (view.IsMine)
             {
-                playerController.enabled = false;
+                // Enable player controls only for the local player
+                var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+                if (playerController != null)
+                {
+                    playerController.enabled = true;
+                }
+
+                var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
+                if (playerInteraction != null)
+                {
+                    playerInteraction.enabled = true;
+                    playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+                }
+                if (camera != null)
+                {
+                    camera.enabled = true; // Enable camera for local player
+                }
+            }
+            else
+            {
+                // Disable controls for remote players
+                var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
+                if (playerController != null)
+                {
+                    playerController.enabled = false;
+                }
             }
         }
     }
