@@ -13,4 +13,9 @@ public class InteractableObject : MonoBehaviourPun
     {
         // Show outline and UI
     }
+
+    public virtual void Hide()
+    {
+        // Hide outline and UI
+    }
 }

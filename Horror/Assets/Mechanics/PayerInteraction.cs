@@ -7,6 +7,7 @@ public class PlayerInteraction : MonoBehaviour
 {
     public float playerReach = 3f;
     public Camera playerCam = null;
+    private InteractableObject currentInteractable;
     PhotonView view;
 
     private void Start()
@@ -19,72 +20,40 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (view.IsMine)
         {
-            Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 3f))
+            if (playerCam == null)
+            {
+                return;
+            }
+            Ray ray = playerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 3f))
             {
                 InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
+
                 if (interactable != null)
                 {
-                    interactable.Show(); // This handles the correct override via polymorphism
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (interactable != currentInteractable)
                     {
-                        interactable.HandleInteraction();
-                    }
-                }
+                        if (currentInteractable != null)
+                            currentInteractable.Hide();
 
+                        currentInteractable = interactable;
+                        currentInteractable.Show();
+                    }
+                    currentInteractable.HandleInteraction();
+                }
+                else if (currentInteractable != null)
+                {
+                    currentInteractable.Hide();
+                    currentInteractable = null;
+                }
+            }
+            else if (currentInteractable != null)
+            {
+                currentInteractable.Hide();
+                currentInteractable = null;
             }
         }
-
     }
-
-    //void CheckInteraction()
-    //{
-    //    RaycastHit hit;
-    //    Ray ray = new Ray(playerCam.transform.position, Camera.main.transform.forward);
-
-    //    if (Physics.Raycast(ray, out hit, playerReach))
-    //    {
-    //        if (hit.collider.tag == "Interactable")
-    //        {
-    //            Interactable newInteractable = hit.collider.GetComponent<Interactable>();
-
-    //            if (currentInteractable && newInteractable != currentInteractable)
-    //            {
-    //                currentInteractable.DisableOutline();
-    //            }
-
-    //            if (newInteractable.enabled)
-    //            {
-    //                SetNewCurrentInteractable(newInteractable);
-    //            }
-    //            else
-    //            {
-    //                DisableCurrentInteractable();
-    //            }
-    //        }
-    //        else
-    //        {
-    //            DisableCurrentInteractable();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        DisableCurrentInteractable();
-    //    }
-    //}
-
-    //void SetNewCurrentInteractable(Interactable newInteractable)
-    //{
-    //    currentInteractable = newInteractable;
-    //    currentInteractable.EnableOutline();
-    //}
-
-    //void DisableCurrentInteractable()
-    //{
-    //    if (currentInteractable)
-    //    {
-    //        currentInteractable.DisableOutline();
-    //        currentInteractable = null;
-    //    }
-    //}
 }

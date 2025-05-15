@@ -18,16 +18,23 @@ public class door_panel_script : InteractableObject
         outline.enabled = false;
     }
 
-    public virtual void Show()
+    public override void Show()
     {
         interactUiMessage.SetActive(true);
         outline.enabled = true;
     }
 
+    public override void Hide()
+    {
+        interactUiMessage.SetActive(false);
+        outline.enabled = false;
+    }
+
 
     public override void HandleInteraction()
     {
-        ToggleDoor();
+        if (Input.GetKeyDown(KeyCode.E))
+            ToggleDoor();
     }
 
     void ToggleDoor()
