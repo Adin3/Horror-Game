@@ -1,35 +1,64 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class Screw : MonoBehaviour
+public class Screw : InteractableObject
 {
     public bool isRemoved = false;
-    public float interactDistance = 3f;
     public VentManager ventManager;
     public LayerMask interractableLayer;
+    public GameObject interactUiMessage;
+    private Outline outline;
 
-    public void Remove()
+    void Start()
+    {
+        if (!isRemoved)
+        {
+            interactUiMessage.SetActive(true);
+            interactUiMessage.SetActive(false);
+            outline = GetComponent<Outline>();
+            outline.enabled = true;
+            outline.enabled = false;
+        }
+    }
+
+    public override void Show()
+    {
+        if (isRemoved) return;
+        interactUiMessage.SetActive(true);
+        outline.enabled = true;
+    }
+
+    public override void Hide()
+    {
+        interactUiMessage.SetActive(false);
+        outline.enabled = false;
+    }
+
+
+    public override void HandleInteraction()
+    {
+        if (isRemoved) return;
+        if (Input.GetMouseButtonDown(0) && ventManager.canUnscrew)
+            removeScrew();
+    }
+
+    void removeScrew()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            photonView.RPC(nameof(RPC_Remove), RpcTarget.AllBuffered);
+        }
+        else
+        {
+            RPC_Remove();
+        }
+        ventManager.ScrewRemoved();
+    }
+
+    [PunRPC]
+    public void RPC_Remove()
     {
         isRemoved = true;
         gameObject.SetActive(false); // Hide the screw
-    }
-    void Update()
-    {
-        if (!ventManager.canUnscrew) return;
-
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, interactDistance, interractableLayer))
-        {
-            if (Input.GetMouseButtonDown(0) && hit.collider.gameObject == gameObject) // Left mouse click
-            {
-                Screw screw = hit.collider.GetComponent<Screw>();
-                if (screw != null && !screw.isRemoved)
-                {
-                    screw.Remove();
-                    ventManager.ScrewRemoved();
-                }
-            }
-        }
     }
 }

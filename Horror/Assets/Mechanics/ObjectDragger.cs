@@ -6,6 +6,7 @@ public class ObjectDragger : MonoBehaviour
     public float grabDistance = 3f;
     public float moveSpeed = 10f;
     public LayerMask draggableLayer;
+    public Camera playerCam = null;
 
     private Rigidbody grabbedRigidbody;
     private Vector3 grabOffset;
@@ -16,7 +17,7 @@ public class ObjectDragger : MonoBehaviour
         // Start dragging when left mouse button is pressed
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            Ray ray = playerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, grabDistance, draggableLayer))
@@ -50,7 +51,7 @@ public class ObjectDragger : MonoBehaviour
     {
         while (Input.GetMouseButton(0))
         {
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            Ray ray = playerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             Vector3 targetPoint = ray.origin + ray.direction * grabDistance - grabOffset;
             Vector3 force = (targetPoint - grabbedRigidbody.position) * moveSpeed;
             grabbedRigidbody.linearVelocity = force;
