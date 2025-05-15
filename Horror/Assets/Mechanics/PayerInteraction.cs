@@ -19,18 +19,19 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (view.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, 3f))
             {
-                Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit, 3f))
+                InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
+                if (interactable != null)
                 {
-                    InteractableObject interactable = hit.collider.GetComponent<InteractableObject>();
-                    if (interactable != null)
+                    interactable.Show(); // This handles the correct override via polymorphism
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
-                        interactable.HandleInteraction(); // This handles the correct override via polymorphism
+                        interactable.HandleInteraction();
                     }
-
                 }
+
             }
         }
 
