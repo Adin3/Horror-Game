@@ -10,6 +10,7 @@ public class PlayerCam : MonoBehaviour
     public Transform orientation;
     public Transform playerBody;
     public Transform camHolder;
+    public LayerMask seeker;
 
     float xRotation;
     float yRotation;
@@ -17,6 +18,25 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        Camera cam = GetComponent<Camera>();
+        if (cam != null)
+        {
+            // This will keep all current layers but remove the Monster layer
+            int monsterLayer = LayerMask.NameToLayer("Seeker");
+            if (monsterLayer != -1) // Make sure the layer exists
+            {
+                cam.cullingMask &= ~(1 << monsterLayer);
+            }
+            else
+            {
+                Debug.LogError("Monster layer not found! Make sure you created the layer.");
+            }
+        }
+        else
+        {
+            Debug.LogError("No Camera component found! Make sure this script is attached to a Camera.");
+        }
     }
 
     void Update()
