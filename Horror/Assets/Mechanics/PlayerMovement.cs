@@ -153,6 +153,8 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection.y = 0f; // Prevent vertical movement from camera
+        moveDirection = moveDirection.normalized;
 
         // on ground
         if (grounded)

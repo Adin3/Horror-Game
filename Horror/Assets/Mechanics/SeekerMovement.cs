@@ -1,17 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using System.Data;
 using Photon.Pun;
 
 public class SeekerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    private float moveSpeed;
+    public float moveSpeed;
     public float walkSpeed;
-
     public float groundDrag;
+    public float airMultiplier = 0.4f; // Add this for better air control
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -26,7 +22,6 @@ public class SeekerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
-
     PhotonView view;
 
     public MovementState state;
@@ -61,14 +56,13 @@ public class SeekerMovement : MonoBehaviour
             SpeedControl();
             StateHandler();
 
+            // Handle drag
             if (grounded)
             {
-                Debug.Log("Grounded");
                 rb.linearDamping = groundDrag;
             }
             else
             {
-                Debug.Log("Air");
                 rb.linearDamping = 0;
             }
         }
@@ -85,22 +79,18 @@ public class SeekerMovement : MonoBehaviour
 
     private void MyInput()
     {
-        // Only process input for the local player (redundant check since this is only called if view.IsMine)
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
     }
 
     private void StateHandler()
     {
-
         // Mode - Walking
         if (grounded)
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
         }
-
         // Mode - Air
         else
         {
@@ -110,29 +100,31 @@ public class SeekerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        // Calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection.y = 0f; // Prevent vertical movement from camera
+        moveDirection = moveDirection.normalized;
 
-        // on ground
+        // Apply movement force
         if (grounded)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            Debug.Log("Grounded");
+            rb.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
         }
-        else if (!grounded)
+        else
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
 }
