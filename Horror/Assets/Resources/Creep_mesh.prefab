@@ -638,11 +638,6 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 7130072583248905113}
-  playerBody: {fileID: 682008843204592866}
-  camHolder: {fileID: 184006851422887347}
-  seeker:
-    serializedVersion: 2
-    m_Bits: 8192
 --- !u!1 &2490815552171285246
 GameObject:
   m_ObjectHideFlags: 0
