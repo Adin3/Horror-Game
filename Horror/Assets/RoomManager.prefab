@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f624f6579718942afbe767491609d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3742277487999390692, guid: 75c2f99e69167f44fab9cdac136cb540, type: 3}
+  runner: {fileID: 2614969526996884582, guid: 2e9d5755f1eb5fc439769b642cf2576b, type: 3}
+  seeker: {fileID: 5003645649424157114, guid: f84c9f2835d21624890c0aaa2a3742c1, type: 3}
   spawnPoint: {fileID: 0}
+  isSeeker: 1

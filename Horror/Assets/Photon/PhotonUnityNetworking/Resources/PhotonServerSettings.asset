@@ -44,6 +44,8 @@ MonoBehaviour:
   - RPC_ToggleDoor
   - RPC_Remove
   - RemoveVent
+  - RPC_EndPhasing
+  - RPC_StartPhasing
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
