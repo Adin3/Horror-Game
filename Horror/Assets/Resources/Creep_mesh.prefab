@@ -638,6 +638,7 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 7130072583248905113}
+  playerBody: {fileID: 682008843204592866}
 --- !u!1 &2490815552171285246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1479,12 +1480,16 @@ MonoBehaviour:
   moveSpeed: 5
   walkSpeed: 5
   groundDrag: 5
+  sprintSpeed: 0
   airMultiplier: 1
   playerHeight: 4
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
   orientation: {fileID: 7130072583248905113}
+  gravity: 100
+  sprintKey: 304
+  animator: {fileID: 0}
   state: 0
 --- !u!114 &4861114502361760450
 MonoBehaviour:

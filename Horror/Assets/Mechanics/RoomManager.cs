@@ -9,7 +9,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [Space]
     public Transform spawnPoint;
 
-    public bool isSeeker = true;
+    public bool isSeeker;
 
     private GameObject _player;
 
@@ -33,16 +33,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.JoinOrCreateRoom("Lobby", null, null);
         Debug.Log("We joined a room");
+  
+    }
 
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Is Master Client: " + PhotonNetwork.IsMasterClient);
+        isSeeker = PhotonNetwork.IsMasterClient;
         StartCoroutine(spawnPlayer());
     }
 
     IEnumerator spawnPlayer()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3f);
         Debug.Log("Spawned " + spawnPoint.position);
         if (isSeeker)
         {
+            isSeeker = false;
+            Debug.Log("Spawning Seeker named: [seeker.name]");
             _player = PhotonNetwork.Instantiate(seeker.name, spawnPoint.position, Quaternion.identity);
             if (_player == null)
             {
@@ -57,24 +65,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
             if (view.IsMine)
             {
                 // Enable player controls only for the local player
-                var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
-                if (playerController != null)
-                {
-                    Debug.Log("Enabling player controller for local player.");
-                    playerController.enabled = true;
-                }
-
-                var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
-                if (playerInteraction != null)
-                {
-                    playerInteraction.enabled = true;
-                    playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
-                }
                 if (camera != null)
                 {
                     Debug.Log("Enabling camera for local player.");
                     camera.enabled = true; // Enable camera for local player
                 }
+                var playerController = pla.GetComponent<SeekerMovement>();
+                if (playerController != null)
+                {
+                    Debug.Log("Enabling player controller for local player.");
+                    playerController.enabled = true;
+                    var playerAnimator = pla.GetComponent<Animator>();
+                    playerController.animator = playerAnimator;
+                }
+
+                var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
+                if (playerInteraction != null)
+                {
+                    Debug.Log("Enabling player interaction for local player.");
+                    playerInteraction.enabled = true;
+                    playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+                }
+                var playerCam = cameraHolder.GetComponentInChildren<PlayerCam>();
+                playerCam.enabled = true;
+                playerCam.playerType = "Seeker";
+
             }
             else
             {
@@ -114,6 +129,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
                 {
                     camera.enabled = true; // Enable camera for local player
                 }
+                var playerCam = cameraHolder.GetComponentInChildren<PlayerCam>();
+                playerCam.enabled = true;
+                playerCam.playerType = "Runner";
             }
             else
             {

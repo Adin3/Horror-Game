@@ -5,8 +5,11 @@ public class door_panel_script : InteractableObject
 {
     public GameObject interactUiMessage;
     private Outline outline;
-    private Animator mAnimator;
     private bool isOpen = false;
+    private Animator mAnimator;
+
+    [HideInInspector]
+    private int isOpenHash;
 
     void Start()
     {
@@ -16,6 +19,7 @@ public class door_panel_script : InteractableObject
         mAnimator = GetComponent<Animator>();
         outline.enabled = true;
         outline.enabled = false;
+        isOpenHash = Animator.StringToHash("isOpen");
     }
 
     public override void Show()
@@ -53,6 +57,6 @@ public class door_panel_script : InteractableObject
     private void RPC_ToggleDoor()
     {
         isOpen = !isOpen;
-        mAnimator.SetBool("isOpen", isOpen);
+        mAnimator.SetBool(isOpenHash, isOpen);
     }
 }

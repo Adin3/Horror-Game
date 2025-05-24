@@ -7,6 +7,7 @@ public class SeekerMovement : MonoBehaviour
     public float moveSpeed;
     public float walkSpeed;
     public float groundDrag;
+    public float sprintSpeed;
     public float airMultiplier = 0.4f; // Add this for better air control
 
     [Header("Ground Check")]
@@ -16,6 +17,12 @@ public class SeekerMovement : MonoBehaviour
 
     public Transform orientation;
 
+    [Header("Gravity")]
+    [SerializeField] public float gravity = 100f;
+
+    [Header("Keybinds")]
+    public KeyCode sprintKey = KeyCode.LeftShift;
+
     float horizontalInput;
     float verticalInput;
 
@@ -24,11 +31,22 @@ public class SeekerMovement : MonoBehaviour
     Rigidbody rb;
     PhotonView view;
 
+    [HideInInspector]
+    int isRunningHash;
+    int isWalkingHash;
+    int isIdlingHash;
+
+    [HideInInspector]
+    public Animator animator = null;
+
+
     public MovementState state;
     public enum MovementState
     {
         walking,
-        air
+        air,
+        idling,
+        sprinting
     }
 
     public void Start()
@@ -43,6 +61,13 @@ public class SeekerMovement : MonoBehaviour
         {
             rb.isKinematic = true;
         }
+        if (animator == null)
+        {
+            Debug.Log("No animATOR");
+        }
+        isRunningHash = Animator.StringToHash("isRunning");
+        isWalkingHash = Animator.StringToHash("isWalking");
+        isIdlingHash = Animator.StringToHash("isIdling");
     }
 
     private void Update()
@@ -74,6 +99,7 @@ public class SeekerMovement : MonoBehaviour
         if (view.IsMine)
         {
             MovePlayer();
+            ApplyGravity();
         }
     }
 
@@ -85,11 +111,36 @@ public class SeekerMovement : MonoBehaviour
 
     private void StateHandler()
     {
+        bool hasInput = horizontalInput != 0 || verticalInput != 0;
         // Mode - Walking
         if (grounded)
         {
-            state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            if (hasInput)
+            {
+                if (Input.GetKey(sprintKey))
+                {
+                    state = MovementState.sprinting;
+                    animator.SetBool(isRunningHash, true);
+                    animator.SetBool(isWalkingHash, false);
+                    animator.SetBool(isIdlingHash, false);
+                    moveSpeed = sprintSpeed;
+                }
+                else
+                {
+                    state = MovementState.walking;
+                    animator.SetBool(isWalkingHash, true);
+                    animator.SetBool(isRunningHash, false);
+                    animator.SetBool(isIdlingHash, false);
+                    moveSpeed = walkSpeed;
+                }
+            } else
+            {
+                state = MovementState.idling;
+                moveSpeed = 0;
+                animator.SetBool(isWalkingHash, false);
+                animator.SetBool(isIdlingHash, true);
+                animator.SetBool(isRunningHash, false);
+            }
         }
         // Mode - Air
         else
@@ -125,6 +176,15 @@ public class SeekerMovement : MonoBehaviour
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        // Apply custom gravity if not grounded
+        if (!grounded)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Force); // Adjust gravity force if needed
         }
     }
 }

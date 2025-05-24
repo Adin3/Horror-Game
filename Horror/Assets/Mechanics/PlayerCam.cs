@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerCam : MonoBehaviour
+public class PlayerCam : MonoBehaviourPun
 {
  
     public float sensX;
     public float sensY;
     public Transform orientation;
-    //public Transform playerBody;
+    public Transform playerBody;
+
+    [HideInInspector]
+    public string playerType;
 
     float xRotation;
     float yRotation;
@@ -21,10 +25,10 @@ public class PlayerCam : MonoBehaviour
         if (cam != null)
         {
             // This will keep all current layers but remove the Monster layer
-            int monsterLayer = LayerMask.NameToLayer("Seeker");
-            if (monsterLayer != -1) // Make sure the layer exists
+            int playerLayer = LayerMask.NameToLayer(playerType);
+            if (playerLayer != -1) // Make sure the layer exists
             {
-                cam.cullingMask &= ~(1 << monsterLayer);
+                cam.cullingMask &= ~(1 << playerLayer);
             }
             else
             {
@@ -39,6 +43,7 @@ public class PlayerCam : MonoBehaviour
 
     void Update()
     {
+
         if (PauseMenu.isPaused)
         {
             return; 
@@ -58,16 +63,19 @@ public class PlayerCam : MonoBehaviour
         orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         //camHolder.localRotation = Quaternion.Euler(0, yRotation, 0);
 
-        //playerBody.rotation = Quaternion.Euler(-90, yRotation, 0);
+        playerBody.rotation = Quaternion.Euler(0, yRotation, 0);
+        photonView.RPC("SyncBodyRotation", RpcTarget.Others, yRotation);
         //camHolder.rotation = Quaternion.Euler(0, yRotation, 0);
 
     }
-
-    //private void OnControllerColliderHit(ControllerColliderHit hit)
-    //{
-    //    if (hit.gameObject.CompareTag("Obstacle"))
-    //    {
-    //        Debug.Log("Collided.");
-    //    }
-    //}
+    [PunRPC]
+    void SyncBodyRotation(float rotationY)
+    {
+        // Apply the body rotation for remote players (without affecting their camera)
+        if (!photonView.IsMine)
+        {
+            Debug.Log("Applied ROTATION" + rotationY);
+            playerBody.rotation = Quaternion.Euler(0, rotationY, 0);
+        }
+    }
 }
