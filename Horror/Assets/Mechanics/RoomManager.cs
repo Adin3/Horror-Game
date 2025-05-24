@@ -47,7 +47,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(3f);
         Debug.Log("Spawned " + spawnPoint.position);
-        if (isSeeker)
+        if (!isSeeker)
         {
             isSeeker = false;
             Debug.Log("Spawning Seeker named: [seeker.name]");
@@ -106,29 +106,23 @@ public class RoomManager : MonoBehaviourPunCallbacks
             _player = PhotonNetwork.Instantiate(runner.name, spawnPoint.position, Quaternion.identity);
 
             Transform pla = _player.transform.Find("Player");
-            Transform cameraHolder = _player.transform.Find("CameraHolder");
+            Transform cameraHolder = pla.transform.Find("CameraHolder");
             Camera camera = cameraHolder.GetComponentInChildren<Camera>();
             PhotonView view = pla.GetComponent<PhotonView>();
 
             if (view.IsMine)
             {
+                camera.enabled = true; // Enable camera for local player
                 // Enable player controls only for the local player
                 var playerController = pla.GetComponent<PlayerMovement>(); // Assuming you have a PlayerController component
-                if (playerController != null)
-                {
-                    playerController.enabled = true;
-                }
+                playerController.enabled = true;
+                var playerAnimator = pla.GetComponent<Animator>();
+                playerController.animator = playerAnimator;
 
                 var playerInteraction = pla.GetComponent<PlayerInteraction>(); // Assuming you have a PlayerInteraction component
-                if (playerInteraction != null)
-                {
-                    playerInteraction.enabled = true;
-                    playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
-                }
-                if (camera != null)
-                {
-                    camera.enabled = true; // Enable camera for local player
-                }
+                playerInteraction.enabled = true;
+                playerInteraction.playerCam = camera; // Assign the camera to the player interaction script
+
                 var playerCam = cameraHolder.GetComponentInChildren<PlayerCam>();
                 playerCam.enabled = true;
                 playerCam.playerType = "Runner";

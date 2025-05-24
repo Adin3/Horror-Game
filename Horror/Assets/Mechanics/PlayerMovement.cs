@@ -21,6 +21,14 @@ public class PlayerMovement : MonoBehaviour
     public float crouchSpeed;
     public float crouchYScale;
     private float startYScale;
+    private CapsuleCollider capsuleCollider;
+    private float originalHeight;
+    private Vector3 originalCenter;
+    private float originalRadius;
+
+    public float crouchHeight = 1.279823f;
+    public Vector3 crouchCenter;
+    public float crouchRadius;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -46,13 +54,23 @@ public class PlayerMovement : MonoBehaviour
 
     PhotonView view;
 
+    [HideInInspector] 
+    public Animator animator = null;
+
+    private int isRunningHash;
+    private int isWalkingHash;
+    private int isIdlingHash;
+    private int isCrouchingHash;
+    private int isCrawlingHash;
+
     public MovementState state;
     public enum MovementState
     {
         walking,
         sprinting,
         crouching,
-        air
+        air,
+        idling
     }
 
     public void Start()
@@ -62,12 +80,27 @@ public class PlayerMovement : MonoBehaviour
 
         startYScale = transform.localScale.y;
         view = GetComponent<PhotonView>();
+        capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+        originalHeight = capsuleCollider.height;
+        originalCenter = capsuleCollider.center;
+        originalRadius = capsuleCollider.radius;
+        crouchCenter = new Vector3(originalCenter.x, -0.3700758f, originalCenter.z);
+        crouchRadius = originalRadius / 2f;
 
         // Only enable physics simulation for the local player
         if (!view.IsMine)
         {
             rb.isKinematic = true;
         }
+        if (animator == null)
+        {
+            Debug.Log("No animATOR");
+        }
+        isRunningHash = Animator.StringToHash("isRunning");
+        isWalkingHash = Animator.StringToHash("isWalking");
+        isIdlingHash = Animator.StringToHash("isIdling");
+        isCrouchingHash = Animator.StringToHash("isCrouching");
+        isCrawlingHash = Animator.StringToHash("isCrawling");
     }
 
     private void Update()
@@ -89,6 +122,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 rb.linearDamping = 0;
             }
+            if (state == MovementState.crouching)
+            {
+                capsuleCollider.center = crouchCenter; // Example center
+                capsuleCollider.height = crouchHeight;
+            } else
+            {
+                capsuleCollider.height = originalHeight;
+                capsuleCollider.center = originalCenter;
+            }
         }
     }
 
@@ -107,45 +149,45 @@ public class PlayerMovement : MonoBehaviour
         // Only process input for the local player (redundant check since this is only called if view.IsMine)
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
-        // start crouch
-        if (Input.GetKeyDown(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-        }
-
-        // stop crouch
-        if (Input.GetKeyUp(crouchKey))
-        {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-        }
     }
 
     private void StateHandler()
     {
-        // Mode - Crouching
-        if (Input.GetKey(crouchKey))
-        {
-            state = MovementState.crouching;
-            moveSpeed = crouchSpeed;
-        }
+        bool hasInput = horizontalInput != 0 || verticalInput != 0;
 
-        // Mode - Sprinting
-        else if (grounded && Input.GetKey(sprintKey))
+        if (grounded)
         {
-            state = MovementState.sprinting;
-            moveSpeed = sprintSpeed;
-        }
+            ResetAllAnimatorBools();
 
-        // Mode - Walking
-        else if (grounded)
-        {
-            state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            if (Input.GetKey(crouchKey))
+            {
+                animator.SetBool(isCrouchingHash, true);
+                state = MovementState.crouching;
+                if (hasInput)
+                {
+                    animator.SetBool(isCrawlingHash, true);
+                }
+                moveSpeed = crouchSpeed;
+            }
+            else if (Input.GetKey(sprintKey) && hasInput)
+            {
+                state = MovementState.sprinting;
+                moveSpeed = sprintSpeed;
+                animator.SetBool(isRunningHash, true);
+            }
+            else if (hasInput)
+            {
+                state = MovementState.walking;
+                moveSpeed = walkSpeed;
+                animator.SetBool(isWalkingHash, true);
+            }
+            else
+            {
+                state = MovementState.idling;
+                moveSpeed = 0;
+                animator.SetBool(isIdlingHash, true);
+            }
         }
-
-        // Mode - Air
         else
         {
             state = MovementState.air;
@@ -188,5 +230,13 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(Vector3.down * gravity, ForceMode.Force); // Adjust gravity force if needed
         }
+    }
+    private void ResetAllAnimatorBools()
+    {
+        animator.SetBool(isRunningHash, false);
+        animator.SetBool(isWalkingHash, false);
+        animator.SetBool(isIdlingHash, false);
+        animator.SetBool(isCrouchingHash, false);
+        animator.SetBool(isCrawlingHash, false);
     }
 }
