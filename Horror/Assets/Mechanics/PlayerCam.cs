@@ -8,9 +8,7 @@ public class PlayerCam : MonoBehaviour
     public float sensX;
     public float sensY;
     public Transform orientation;
-    public Transform playerBody;
-    public Transform camHolder;
-    public LayerMask seeker;
+    //public Transform playerBody;
 
     float xRotation;
     float yRotation;
@@ -60,7 +58,7 @@ public class PlayerCam : MonoBehaviour
         orientation.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         //camHolder.localRotation = Quaternion.Euler(0, yRotation, 0);
 
-        playerBody.rotation = Quaternion.Euler(-90, yRotation, 0);
+        //playerBody.rotation = Quaternion.Euler(-90, yRotation, 0);
         //camHolder.rotation = Quaternion.Euler(0, yRotation, 0);
 
     }

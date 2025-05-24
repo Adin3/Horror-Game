@@ -46,6 +46,8 @@ MonoBehaviour:
   - RemoveVent
   - RPC_EndPhasing
   - RPC_StartPhasing
+  - RPC_CollectItem
+  - TeleportRunner
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -638,11 +638,6 @@ MonoBehaviour:
   sensX: 400
   sensY: 400
   orientation: {fileID: 7130072583248905113}
-  playerBody: {fileID: 682008843204592866}
-  camHolder: {fileID: 184006851422887347}
-  seeker:
-    serializedVersion: 2
-    m_Bits: 8192
 --- !u!1 &2490815552171285246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,6 +1326,7 @@ GameObject:
   - component: {fileID: 7487083018577137244}
   - component: {fileID: 5312607490307301007}
   - component: {fileID: 5445061401295460864}
+  - component: {fileID: 6951636913910608293}
   m_Layer: 16
   m_Name: Player
   m_TagString: Untagged
@@ -1631,6 +1627,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   playerCam: {fileID: 2548719535135131171}
+--- !u!114 &6951636913910608293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710773862086561923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593fb341130c1e14bbdb57ab03f3025c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 2
+  attackCooldown: 1.5
+  runnerLayer:
+    serializedVersion: 2
+    m_Bits: 32768
+  hitsToTeleport: 3
+  teleportCoordinates: {x: -23, y: 2, z: -10}
 --- !u!1 &4998262952671799425
 GameObject:
   m_ObjectHideFlags: 0

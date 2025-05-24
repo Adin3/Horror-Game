@@ -33,6 +33,7 @@ public class door_panel_script : InteractableObject
 
     public override void HandleInteraction()
     {
+        Debug.Log("PLAYER INTERACTED WITH AN OBJECT");
         if (Input.GetKeyDown(KeyCode.E))
             ToggleDoor();
     }
