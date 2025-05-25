@@ -48,6 +48,8 @@ MonoBehaviour:
   - RPC_StartPhasing
   - RPC_CollectItem
   - SyncBodyRotation
+  - RPC_SetFlashlight
+  - SyncFlashlightRotation
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

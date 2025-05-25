@@ -17,9 +17,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Scena_multiplayer_test_nu_va_atingeti.unity
     guid: d7e8da8cfbd77984ca678eac5f9a1b20
-  - enabled: 1
+  - enabled: 0
     path: Assets/TestScena.unity
     guid: 6ce9c364bed015a48adb1b2bf30da3c6
+  - enabled: 1
+    path: Assets/scena_lu_alex.unity
+    guid: 0a03d5fafb29fe94f99487770f589ade
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
