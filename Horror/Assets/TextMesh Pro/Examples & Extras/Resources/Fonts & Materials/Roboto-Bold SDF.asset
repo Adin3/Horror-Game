@@ -220,6 +220,7 @@ MonoBehaviour:
       m_LigatureGlyphID: 1139
     - m_ComponentGlyphIDs: 5d000000aa000000
       m_LigatureGlyphID: 1141
+<<<<<<< HEAD
     - m_ComponentGlyphIDs: 3d000000a9000000
       m_LigatureGlyphID: 665
     - m_ComponentGlyphIDs: 3d000000ad000000
@@ -272,6 +273,8 @@ MonoBehaviour:
       m_LigatureGlyphID: 1176
     - m_ComponentGlyphIDs: 52000000aa000000
       m_LigatureGlyphID: 682
+=======
+>>>>>>> parent of eb8447ae (Revert "Merge branch 'robert' into alex")
     m_GlyphPairAdjustmentRecords:
     - m_FirstAdjustmentRecord:
         m_GlyphIndex: 52
@@ -6528,6 +6531,7 @@ MonoBehaviour:
           m_XAdvance: 0
           m_YAdvance: 0
       m_FeatureLookupFlags: 0
+<<<<<<< HEAD
     - m_FirstAdjustmentRecord:
         m_GlyphIndex: 61
         m_GlyphValueRecord:
@@ -18648,6 +18652,8 @@ MonoBehaviour:
           m_XAdvance: 0
           m_YAdvance: 0
       m_FeatureLookupFlags: 0
+=======
+>>>>>>> parent of eb8447ae (Revert "Merge branch 'robert' into alex")
     m_MarkToBaseAdjustmentRecords: []
     m_MarkToMarkAdjustmentRecords: []
   m_ShouldReimportFontFeatures: 0

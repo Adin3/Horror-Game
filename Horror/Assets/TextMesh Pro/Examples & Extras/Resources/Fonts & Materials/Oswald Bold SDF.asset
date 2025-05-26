@@ -942,6 +942,7 @@ MonoBehaviour:
           m_YAdvance: 0
       m_FeatureLookupFlags: 77
     - m_FirstAdjustmentRecord:
+<<<<<<< HEAD
         m_GlyphIndex: 58
         m_GlyphValueRecord:
           m_XPlacement: 0
@@ -3132,6 +3133,8 @@ MonoBehaviour:
           m_YAdvance: 0
       m_FeatureLookupFlags: 77
     - m_FirstAdjustmentRecord:
+=======
+>>>>>>> parent of eb8447ae (Revert "Merge branch 'robert' into alex")
         m_GlyphIndex: 92
         m_GlyphValueRecord:
           m_XPlacement: 0
