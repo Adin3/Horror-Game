@@ -39,7 +39,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
-        PhotonNetwork.LoadLevel("scena_lu_alex 1");
+        PhotonNetwork.LoadLevel("scena_lu_alex");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
