@@ -32,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
+    [Header("Gravity")]
+    [SerializeField] public float gravity = 100f;
+
     public Transform orientation;
 
     float horizontalInput;
@@ -80,12 +83,10 @@ public class PlayerMovement : MonoBehaviour
 
             if (grounded)
             {
-                Debug.Log("Grounded");
                 rb.linearDamping = groundDrag;
             }
             else
             {
-                Debug.Log("Air");
                 rb.linearDamping = 0;
             }
         }
@@ -97,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
         if (view.IsMine)
         {
             MovePlayer();
+            ApplyGravity();
         }
     }
 
@@ -153,12 +155,13 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection.y = 0f; // Prevent vertical movement from camera
+        moveDirection = moveDirection.normalized;
 
         // on ground
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            Debug.Log("Grounded");
         }
         else if (!grounded)
         {
@@ -175,6 +178,15 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
+    private void ApplyGravity()
+    {
+        // Apply custom gravity if not grounded
+        if (!grounded)
+        {
+            rb.AddForce(Vector3.down * gravity, ForceMode.Force); // Adjust gravity force if needed
         }
     }
 }
