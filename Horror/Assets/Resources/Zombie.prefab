@@ -6153,6 +6153,7 @@ MonoBehaviour:
   sensY: 400
   orientation: {fileID: 8772377792539049531}
   playerBody: {fileID: 5950453098137439136}
+  flashLight: {fileID: 0}
   playerType: 
 --- !u!114 &5195186437393959119
 MonoBehaviour:
