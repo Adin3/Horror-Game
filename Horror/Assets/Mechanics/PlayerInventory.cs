@@ -1,10 +1,15 @@
 using UnityEngine;
 using Photon.Pun;
-
+using TMPro;
+using UnityEngine.SceneManagement;
+using System.Collections;
 public class PlayerInventory : MonoBehaviourPunCallbacks
 {
     private int wCondCollected = 0;
-    private const int WCOND_TARGET = 5; // Target number of WCond items
+    private const int WCOND_TARGET = 5;
+    public GameObject collectedItemsUI;
+
+    [SerializeField] private TextMeshProUGUI wCondText; 
 
     public void CollectItem(ItemType type, int value)
     {
@@ -30,14 +35,28 @@ public class PlayerInventory : MonoBehaviourPunCallbacks
             wCondCollected += value;
             Debug.Log($"WCond collected! Total: {wCondCollected}");
 
+
+            if (wCondText != null)
+            {
+                wCondText.text = $"Items collected:\n w{wCondCollected}/{WCOND_TARGET}";
+                StartCoroutine(ActivateAndDeactivate());
+            }
+
+
             if (wCondCollected >= WCOND_TARGET)
             {
                 Debug.Log("Congratulations! You've collected 5 WCond items!");
             }
+
         }
-        // We'll keep the Trap type but not implement it yet
     }
 
-    // Helper method to get current WCond count
     public int GetWCondCollected() => wCondCollected;
+
+    private IEnumerator ActivateAndDeactivate()
+    {
+        collectedItemsUI.SetActive(true);       
+        yield return new WaitForSeconds(3f);
+        collectedItemsUI.SetActive(false);   
+    }
 }
