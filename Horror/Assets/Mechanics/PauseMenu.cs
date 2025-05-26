@@ -1,26 +1,17 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
-using Photon.Pun;
 
-public class PauseMenu : MonoBehaviourPunCallbacks
+public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject optionsMenu;
-    public GameObject winGame;
-    public GameObject loseGame;
-    public GameObject collectedItemsUI;
     public static bool isPaused;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
-        winGame.SetActive(false);
-        loseGame.SetActive(false);
-        collectedItemsUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -56,10 +47,9 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         Cursor.visible = false;
     }
 
-    public void GoToMainMenu()
+    public void GoToMainMenu(string sceneName)
     {
         isPaused = false;
-        PhotonNetwork.LeaveLobby();
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene(sceneName);
     }
 }
