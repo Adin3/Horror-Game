@@ -59,7 +59,7 @@ public class PauseMenu : MonoBehaviourPunCallbacks
     public void GoToMainMenu()
     {
         isPaused = false;
-        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene("Main Menu");
     }
 }
