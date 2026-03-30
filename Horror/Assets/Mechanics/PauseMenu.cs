@@ -20,7 +20,6 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         optionsMenu.SetActive(false);
         winGame.SetActive(false);
         loseGame.SetActive(false);
-        collectedItemsUI.SetActive(false);
     }
 
     // Update is called once per frame

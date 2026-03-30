@@ -7,9 +7,9 @@ public class PlayerInventory : MonoBehaviourPunCallbacks
 {
     private int wCondCollected = 0;
     private const int WCOND_TARGET = 5;
-    public GameObject collectedItemsUI;
 
-    [SerializeField] private TextMeshProUGUI wCondText; 
+    public GameObject collectedItemsUI;
+    [SerializeField] public TextMeshProUGUI wCondText; 
 
     public void CollectItem(ItemType type, int value)
     {
@@ -35,11 +35,15 @@ public class PlayerInventory : MonoBehaviourPunCallbacks
             wCondCollected += value;
             Debug.Log($"WCond collected! Total: {wCondCollected}");
 
-
+            collectedItemsUI.SetActive(true);
             if (wCondText != null)
             {
-                wCondText.text = $"Items collected:\n w{wCondCollected}/{WCOND_TARGET}";
+                wCondText.text = $"Items collected:\n {wCondCollected}/{WCOND_TARGET}";
                 StartCoroutine(ActivateAndDeactivate());
+            }
+            else
+            {
+                Debug.LogWarning("wCondText is not assigned in the inspector.");
             }
 
 

@@ -19,7 +19,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
             roomOptions.MaxPlayers = 2;
             Debug.Log("Creating room: " + roomNameInput.text);
             PhotonNetwork.CreateRoom(roomNameInput.text, roomOptions);
-            Debug.Log("Creating room: " + roomNameInput.text);
 
         }
     }

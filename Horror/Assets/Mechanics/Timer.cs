@@ -5,7 +5,7 @@ using System.Collections;
 public class CountdownTimer : MonoBehaviour
 {
     public TMP_Text timerText;
-    public float startTime = 40f;
+    public float startTime = 180f;
 
     private float remainingTime;
     private bool timerRunning = true;

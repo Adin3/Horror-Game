@@ -2,13 +2,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Photon.Pun;
+using TMPro;
 
 public class StartGame : MonoBehaviour
 {
     public GameObject runner;
     public GameObject seeker;
     [Space]
-    public Transform spawnPoint;
+    public Transform spawnPointRunner;
+    public Transform spawnPointSeeker;
+
 
     private bool isSeeker;
 
@@ -29,13 +32,12 @@ public class StartGame : MonoBehaviour
     IEnumerator spawnPlayer()
     {
         yield return new WaitForSeconds(3f);
-        Debug.Log("Spawned " + spawnPoint.position);
 
         if (!isSeeker)
         {
             isSeeker = false;
             Debug.Log("Spawning Seeker named: [seeker.name]");
-            _player = PhotonNetwork.Instantiate(seeker.name, spawnPoint.position, Quaternion.identity);
+            _player = PhotonNetwork.Instantiate(seeker.name, spawnPointSeeker.position, Quaternion.identity);
             if (_player == null)
             {
                 Debug.LogError("Player object is null after instantiation.");
@@ -87,7 +89,7 @@ public class StartGame : MonoBehaviour
         }
         else
         {
-            _player = PhotonNetwork.Instantiate(runner.name, spawnPoint.position, Quaternion.identity);
+            _player = PhotonNetwork.Instantiate(runner.name, spawnPointRunner.position, Quaternion.identity);
 
             Transform pla = _player.transform.Find("Player");
             Transform cameraHolder = pla.transform.Find("CameraHolder");
@@ -110,6 +112,19 @@ public class StartGame : MonoBehaviour
                 var playerCam = cameraHolder.GetComponentInChildren<PlayerCam>();
                 playerCam.enabled = true;
                 playerCam.playerType = "Runner";
+
+                var playerInventory = pla.GetComponent<PlayerInventory>();
+                GameObject uiObject = GameObject.Find("CollectedItemsUI");
+                playerInventory.collectedItemsUI = uiObject;
+                GameObject textObject = GameObject.Find("CollectedItemsText");
+                if (textObject == null)
+                {
+                    Debug.LogError("CollectedItemsText object not found in the scene. Please ensure it exists in the UI hierarchy.");
+                }
+                TextMeshProUGUI textComponent = textObject.GetComponent<TextMeshProUGUI>();
+
+                playerInventory.wCondText = textComponent;
+                playerInventory.collectedItemsUI.SetActive(false);
             }
             else
             {
